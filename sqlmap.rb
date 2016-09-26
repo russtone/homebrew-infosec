@@ -32,19 +32,18 @@ class Sqlmap < Formula
   end
 end
 
+
 __END__
 diff --git a/lib/core/common.py b/lib/core/common.py
-index 743270b..5fbbdd6 100644
+index e78c1fa..100d089 100644
 --- a/lib/core/common.py
 +++ b/lib/core/common.py
-@@ -1200,7 +1200,8 @@ def setPaths(rootPath):
+@@ -1199,7 +1199,7 @@ def setPaths(rootPath):
+     paths.SQLMAP_XML_BANNER_PATH = os.path.join(paths.SQLMAP_XML_PATH, "banner")
      paths.SQLMAP_XML_PAYLOADS_PATH = os.path.join(paths.SQLMAP_XML_PATH, "payloads")
 
-     _ = os.path.join(os.path.expandvars(os.path.expanduser("~")), ".sqlmap")
--    paths.SQLMAP_HOME_PATH = _
-+    __ = os.path.join(os.path.expandvars("$XDG_DATA_HOME")) if "XDG_DATA_HOME" in os.environ else ''
-+    paths.SQLMAP_HOME_PATH = __ if __ else _
+-    _ = os.path.join(os.path.expandvars(os.path.expanduser("~")), ".sqlmap")
++    _ = os.path.join(os.path.expandvars("$XDG_DATA_HOME"), "sqlmap") if "XDG_DATA_HOME" in os.environ else os.path.join(os.path.expandvars(os.path.expanduser("~")), ".sqlmap")
      paths.SQLMAP_OUTPUT_PATH = getUnicode(paths.get("SQLMAP_OUTPUT_PATH", os.path.join(_, "output")), encoding=sys.getfilesystemencoding() or UNICODE_ENCODING)
      paths.SQLMAP_DUMP_PATH = os.path.join(paths.SQLMAP_OUTPUT_PATH, "%s", "dump")
      paths.SQLMAP_FILES_PATH = os.path.join(paths.SQLMAP_OUTPUT_PATH, "%s", "files")
-
