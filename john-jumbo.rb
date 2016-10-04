@@ -70,16 +70,10 @@ end
 
 __END__
 diff --git a/src/params.h b/src/params.h
-index 29e6509..874dbdf 100644
+index 29e6509..dbd8af7 100644
 --- a/src/params.h
 +++ b/src/params.h
-@@ -80,17 +80,18 @@
-  * notes above.
-  */
- #ifndef JOHN_SYSTEMWIDE
--#define JOHN_SYSTEMWIDE			0
-+#define JOHN_SYSTEMWIDE			1
- #endif
+@@ -85,12 +85,12 @@
  
  #if JOHN_SYSTEMWIDE
  #ifndef JOHN_SYSTEMWIDE_EXEC /* please refer to the notes above */
@@ -90,74 +84,8 @@ index 29e6509..874dbdf 100644
 -#define JOHN_SYSTEMWIDE_HOME		"/usr/share/john"
 +#define JOHN_SYSTEMWIDE_HOME		"HOMEBREW_PREFIX/share/john"
  #endif
- #define JOHN_PRIVATE_HOME		"~/.john"
-+#define JOHN_XDG_HOME		"~/john"
+-#define JOHN_PRIVATE_HOME		"~/.john"
++#define JOHN_PRIVATE_HOME		"~/.local/share/john"
  #endif
  
  #ifndef OMP_FALLBACK
-diff --git a/src/path.c b/src/path.c
-index 14f6310..2e07fcc 100644
---- a/src/path.c
-+++ b/src/path.c
-@@ -12,6 +12,7 @@
- #include "autoconfig.h"
- #endif
- #include <string.h>
-+#include <stdlib.h>
- 
- #include "misc.h"
- #include "params.h"
-@@ -34,6 +35,7 @@ static int john_home_lengthex;
- 
- static char *user_home_path = NULL;
- static int user_home_length;
-+static int is_xdg = 1;
- #endif
- 
- #include "memdbg.h"
-@@ -41,7 +43,7 @@ static int user_home_length;
- void path_init(char **argv)
- {
- #if JOHN_SYSTEMWIDE
--	struct passwd *pw;
-+	char *home_dir;
- #ifdef JOHN_PRIVATE_HOME
- 	char *private;
- #endif
-@@ -55,19 +57,30 @@ void path_init(char **argv)
- 	john_home_length = strlen(john_home_path);
- 
- 	if (user_home_path) return;
--	pw = getpwuid(getuid());
--	endpwent();
--	if (!pw) return;
- 
--	user_home_length = strlen(pw->pw_dir) + 1;
-+	/* $HOME may override user's home directory */
-+	if (!(home_dir = getenv("XDG_DATA_HOME"))) {
-+		is_xdg = 0;
-+		if (!(home_dir = getenv("HOME"))) {
-+			struct passwd *pw;
-+
-+			pw = getpwuid(getuid());
-+			endpwent();
-+			if (!pw)
-+				return;
-+			home_dir = pw->pw_dir;
-+		}
-+	}
-+
-+	user_home_length = strlen(home_dir) + 1;
- 	if (user_home_length >= PATH_BUFFER_SIZE) return;
- 
- 	user_home_path = mem_alloc(PATH_BUFFER_SIZE);
--	memcpy(user_home_path, pw->pw_dir, user_home_length - 1);
-+	memcpy(user_home_path, home_dir, user_home_length - 1);
- 	user_home_path[user_home_length - 1] = '/';
- 
- #ifdef JOHN_PRIVATE_HOME
--	private = path_expand(JOHN_PRIVATE_HOME);
-+	private = path_expand(is_xdg ? JOHN_XDG_HOME : JOHN_PRIVATE_HOME);
- 	if (mkdir(private, S_IRUSR | S_IWUSR | S_IXUSR)) {
- 		if (errno != EEXIST) pexit("mkdir: %s", private);
- 	} else
