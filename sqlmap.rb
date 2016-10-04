@@ -6,7 +6,7 @@ class Sqlmap < Formula
   head "https://github.com/sqlmapproject/sqlmap.git"
 
   bottle :unneeded
-	patch :DATA
+  patch :DATA
 
   def install
     libexec.install Dir["*"]
