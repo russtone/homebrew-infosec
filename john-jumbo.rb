@@ -85,21 +85,21 @@ index 29e6509..7127430 100644
   * notes above.
   */
  #ifndef JOHN_SYSTEMWIDE
--#define JOHN_SYSTEMWIDE                        0
-+#define JOHN_SYSTEMWIDE                        1
+-#define JOHN_SYSTEMWIDE			0
++#define JOHN_SYSTEMWIDE			1
  #endif
-
+ 
  #if JOHN_SYSTEMWIDE
  #ifndef JOHN_SYSTEMWIDE_EXEC /* please refer to the notes above */
--#define JOHN_SYSTEMWIDE_EXEC           "/usr/libexec/john"
-+#define JOHN_SYSTEMWIDE_EXEC           "HOMEBREW_PREFIX/libexec/john"
+-#define JOHN_SYSTEMWIDE_EXEC		"/usr/libexec/john"
++#define JOHN_SYSTEMWIDE_EXEC		"HOMEBREW_PREFIX/libexec/john"
  #endif
  #ifndef JOHN_SYSTEMWIDE_HOME
--#define JOHN_SYSTEMWIDE_HOME           "/usr/share/john"
-+#define JOHN_SYSTEMWIDE_HOME           "HOMEBREW_PREFIX/share/john"
+-#define JOHN_SYSTEMWIDE_HOME		"/usr/share/john"
++#define JOHN_SYSTEMWIDE_HOME		"HOMEBREW_PREFIX/share/john"
  #endif
--#define JOHN_PRIVATE_HOME              "~/.john"
-+#define JOHN_PRIVATE_HOME              "XDG_DATA_HOME/john"
+-#define JOHN_PRIVATE_HOME		"~/.john"
++#define JOHN_PRIVATE_HOME		"XDG_DATA_HOME/john"
  #endif
-
+ 
  #ifndef OMP_FALLBACK
