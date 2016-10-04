@@ -84,11 +84,11 @@ index 29e6509..874dbdf 100644
  #if JOHN_SYSTEMWIDE
  #ifndef JOHN_SYSTEMWIDE_EXEC /* please refer to the notes above */
 -#define JOHN_SYSTEMWIDE_EXEC		"/usr/libexec/john"
-+#define JOHN_SYSTEMWIDE_EXEC		"HOMEBREW_PREFIX/libexec/john"
++#define JOHN_SYSTEMWIDE_EXEC		"HOMEBREW_PREFIX/share/john"
  #endif
  #ifndef JOHN_SYSTEMWIDE_HOME
 -#define JOHN_SYSTEMWIDE_HOME		"/usr/share/john"
-+#define JOHN_SYSTEMWIDE_HOME		"HOMEBREW_PREFIX/usr/share/john"
++#define JOHN_SYSTEMWIDE_HOME		"HOMEBREW_PREFIX/share/john"
  #endif
  #define JOHN_PRIVATE_HOME		"~/.john"
 +#define JOHN_XDG_HOME		"~/john"
