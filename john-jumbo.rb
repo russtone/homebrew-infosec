@@ -70,10 +70,16 @@ end
 
 __END__
 diff --git a/src/params.h b/src/params.h
-index 29e6509..dbd8af7 100644
+index 29e6509..72c980f 100644
 --- a/src/params.h
 +++ b/src/params.h
-@@ -85,12 +85,12 @@
+@@ -80,17 +80,17 @@
+  * notes above.
+  */
+ #ifndef JOHN_SYSTEMWIDE
+-#define JOHN_SYSTEMWIDE			0
++#define JOHN_SYSTEMWIDE			1
+ #endif
  
  #if JOHN_SYSTEMWIDE
  #ifndef JOHN_SYSTEMWIDE_EXEC /* please refer to the notes above */
