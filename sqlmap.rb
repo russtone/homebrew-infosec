@@ -35,15 +35,15 @@ end
 
 __END__
 diff --git a/lib/core/common.py b/lib/core/common.py
-index e78c1fa..100d089 100644
+index 8972fb3..c6cf4e2 100644
 --- a/lib/core/common.py
 +++ b/lib/core/common.py
-@@ -1199,7 +1199,7 @@ def setPaths(rootPath):
+@@ -1207,7 +1207,7 @@ def setPaths(rootPath):
      paths.SQLMAP_XML_BANNER_PATH = os.path.join(paths.SQLMAP_XML_PATH, "banner")
      paths.SQLMAP_XML_PAYLOADS_PATH = os.path.join(paths.SQLMAP_XML_PATH, "payloads")
 
 -    _ = os.path.join(os.path.expandvars(os.path.expanduser("~")), ".sqlmap")
 +    _ = os.path.join(os.path.expandvars("$XDG_DATA_HOME"), "sqlmap") if "XDG_DATA_HOME" in os.environ else os.path.join(os.path.expandvars(os.path.expanduser("~")), ".sqlmap")
-     paths.SQLMAP_OUTPUT_PATH = getUnicode(paths.get("SQLMAP_OUTPUT_PATH", os.path.join(_, "output")), encoding=sys.getfilesystemencoding() or UNICODE_ENCODING)
+     paths.SQLMAP_HOME_PATH = _
+     paths.SQLMAP_OUTPUT_PATH = getUnicode(paths.get("SQLMAP_OUTPUT_PATH", os.path.join(_, "output")), encoding=sys.getfilesystemencoding() orUNICODE_ENCODING)
      paths.SQLMAP_DUMP_PATH = os.path.join(paths.SQLMAP_OUTPUT_PATH, "%s", "dump")
-     paths.SQLMAP_FILES_PATH = os.path.join(paths.SQLMAP_OUTPUT_PATH, "%s", "files")
